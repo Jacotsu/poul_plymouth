@@ -1,8 +1,8 @@
 # File copy installation
 sudo mkdir /usr/share/plymouth/themes/tema_plymouth_poul
-sudo cp -r ../{img,poul-plymouth*} /usr/share/plymouth/themes/tema_plymouth_poul
-sudo ln -sf /usr/share/plymouth/themes/tema_plymouth_poul/poul-plymouth.plymouth /etc/alternatives/default.plymouth
-sudo ln -sf /usr/share/plymouth/themes/tema_plymouth_poul/poul-plymouth.grub /etc/alternatives/default.plymouth.grub
+sudo cp -r ../{img,tema_plymouth_poul*} /usr/share/plymouth/themes/tema_plymouth_poul
+sudo ln -sf /usr/share/plymouth/themes/tema_plymouth_poul/tema_plymouth_poul.plymouth /etc/alternatives/default.plymouth
+sudo ln -sf /usr/share/plymouth/themes/tema_plymouth_poul/tema_plymouth_poul.grub /etc/alternatives/default.plymouth.grub
 
 cp /lib/lsb/init-functions ../backups/init-functions.bak
 
