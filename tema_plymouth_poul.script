@@ -1098,6 +1098,18 @@ fun scale_sprite_image (ctr_sprite, perc_x, perc_y) {
     ctr_sprite.sprite.SetImage(ctr_sprite.image);
 }
 
+fun scale_sprite_image_rel_window_height (ctr_sprite, perc_x, perc_y) {
+    new_height = Window.GetHeight() * perc_y;
+    ratio = ctr_sprite.width / ctr_sprite.height;
+
+    ctr_sprite.height = new_height;
+    ctr_sprite.width = ratio * new_height;
+    final_image = ctr_sprite.image.Scale(ctr_sprite.width,
+                         ctr_sprite.height);
+    ctr_sprite.image = final_image;
+    ctr_sprite.sprite.SetImage(ctr_sprite.image);
+}
+
 fun center_sprite_obj(object) {
     object.x = Window.GetX () + Window.GetWidth () / 2 - object.width  / 2;
     object.y = Window.GetY () + Window.GetHeight () / 2 - object.height/2;
@@ -1141,17 +1153,22 @@ sprites["pinguini"] = centered_sprite("pinguini.png");
 sprites["scritta"] = centered_sprite("scritta.png");
 
 
-scale_sprite_image(sprites["pinguini"], 0.4, 0.4);
+#scale_sprite_image(sprites["pinguini"], 0.4, 0.4);
+scale_sprite_image_rel_window_height(sprites["pinguini"], 0.39, 0.39);
 set_sprite_obj_pos_rel_window_center(sprites["pinguini"], 0.5, 0.4);
-##scale_sprite_image(sprites["outer_ring"], 0.4, 0.4);
-##set_sprite_obj_pos_rel_window_center(sprites["outer_ring"], 0.5, 0.4);
-scale_sprite_image(sprites["scritta"], 0.2, 0.2);
+#scale_sprite_image(sprites["scritta"], 0.2, 0.2);
+scale_sprite_image_rel_window_height(sprites["scritta"], 0.15, 0.15);
 set_sprite_obj_pos_rel_window_center(sprites["scritta"], 0.5, 0.85);
 
 max_piruli = 105;
+raggio_piruli = Math.Sqrt(sprites["pinguini"].height *
+                          sprites["pinguini"].height +
+                          sprites["pinguini"].width *
+                          sprites["pinguini"].width)*0.45;
 
 if (Plymouth.GetMode () == "boot") {
-        global.piruli = crea_piruli_del_poli(max_piruli, 0.495, 0.37, 300, 20, 0);
+        global.piruli = crea_piruli_del_poli(max_piruli, 0.495, 0.37,
+                                             raggio_piruli, 20, 0);
 } else if (Plymouth.GetMode () == "shutdown") {
         global.piruli = crea_piruli_del_poli(max_piruli, 0.495, 0.37, 300, 20, 1);
 }
