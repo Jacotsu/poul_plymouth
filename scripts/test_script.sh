@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-sudo mkdir /usr/share/plymouth/themes/tema_plymouth_poul
-sudo cp -r ../{img,tema_plymouth_poul*} /usr/share/plymouth/themes/tema_plymouth_poul
+THEME_NAME='tema_plymouth_poul'
+
+sudo mkdir /usr/share/plymouth/themes/$THEME_NAME
+sudo cp -r ../{img,$THEME_NAME*} /usr/share/plymouth/themes/$THEME_NAME
+sudo rm /usr/share/plymouth/themes/$THEME_NAME/img/*.svg
 sudo plymouthd --debug > debug_plymouthd
 sudo plymouth --show-splash
 
