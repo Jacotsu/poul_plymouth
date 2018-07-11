@@ -37,9 +37,9 @@ tinted_text_colour.green = 1.0;
 tinted_text_colour.blue = 1.0;
 
 # Action Text - #ffffff
-action_text_colour.red = 1.0;
-action_text_colour.green = 1.0;
-action_text_colour.blue = 1.0;
+action_text_colour.red = 0.32;
+action_text_colour.green = 0.48;
+action_text_colour.blue = 0.69;
 
 # Blue - #0087ed
 debugsprite = Sprite();
@@ -202,13 +202,13 @@ Window.SetBackgroundBottomColor (0, 0, 0);  # an equally nice colour on the bott
 
 bits_per_pixel = Window.GetBitsPerPixel ();
 if (bits_per_pixel == 4) {
-    progress_dot_off_filename = "progress_dot_off16.png";
-    password_field_filename = "password_field16.png";
-    question_field_filename = "password_field16.png";
+    progress_dot_off_filename = "bullet.png";
+    password_field_filename = "entry.png";
+    question_field_filename = "entry.png";
 } else {
-    progress_dot_off_filename = "progress_dot_off.png";
-    password_field_filename = "password_field.png";
-    question_field_filename = "password_field.png";
+    progress_dot_off_filename = "bullet.png";
+    password_field_filename = "entry.png";
+    question_field_filename = "entry.png";
 }
 
 
@@ -251,13 +251,13 @@ fun animate_progress_indicator (time, progress) {
     threshold = 1/max_piruli;
 
     if (Plymouth.GetMode () == "boot") {
-    	if (deltaProgress >= threshold) {
-	    mostra_prox_pirulo(piruli);
-	}
+            if (deltaProgress >= threshold) {
+            mostra_prox_pirulo(piruli);
+        }
     } else if (Plymouth.GetMode () == "shutdown") {
-	if (deltaProgress >= threshold) {
-	    nasc_prox_pirulo(piruli);
-	}
+        if (deltaProgress >= threshold) {
+            nasc_prox_pirulo(piruli);
+        }
 
     }
 
@@ -408,40 +408,40 @@ fun message_callback (message)
 #
 
 fun password_dialogue_setup (message_label) {
-    # Debug("Password dialog setup");
+    #DebugBottom("Password dialog setup");
 
     local.entry;
     local.bullet_image;
 
-    bullet_image = Image (progress_dot_off_filename);
-    entry.image = Image (password_field_filename);
+    bullet_image = Image (progress_dot_off_filename).Scale(Window.GetWidth () * 1/ 10, Window.GetHeight () / 300);
+    entry.image = Image (password_field_filename).Scale(Window.GetWidth () * 1/ 10, Window.GetHeight () / 300);
 
     # Hide the normal labels
     prompt_active = 1;
     if (message_notification[1].sprite) hide_message (1);
 
+    # Set up the text entry which contains the bullets
+    entry.sprite = Sprite ();
+    entry.sprite.SetImage (entry.image);
+
+    entry.x = Window.GetX () + Window.GetWidth () * 1/ 20;
+    entry.y = Window.GetY () + Window.GetHeight () * 1/ 10;
+
+    #DebugBottom ("entry x = " + entry.x + ", y = " + entry.y);
+    entry.z = 10000;
+    entry.sprite.SetX (entry.x);
+    entry.sprite.SetY (entry.y);
+    entry.sprite.SetZ (entry.z);
+
     # Set the prompt label
     label = get_message_label(message_label, 0, 1);
+    label.x = entry.x;
+    label.y = entry.y + entry.image.GetHeight() + 5;
     label.z = 10000;
 
     setup_message (message_label, label.x, label.y, label.z, 2);
     show_message (2);
 
-    # Set up the text entry which contains the bullets
-    entry.sprite = Sprite ();
-    entry.sprite.SetImage (entry.image);
-
-    # Centre the box horizontally
-    entry.x = Window.GetX () + Window.GetWidth () / 2 - entry.image.GetWidth () / 2;
-
-    # Put the entry below the second label.
-    entry.y = message_notification[2].y + label.height;
-
-    #Debug ("entry x = " + entry.x + ", y = " + entry.y);
-    entry.z = 10000;
-    entry.sprite.SetX (entry.x);
-    entry.sprite.SetY (entry.y);
-    entry.sprite.SetZ (entry.z);
 
     global.password_dialogue = local;
 }
@@ -463,7 +463,6 @@ fun password_dialogue_opacity (opacity) {
     }
 }
 
-
 # The callback function is called when the display should display a password dialogue.
 # First arg is prompt string, the second is the number of bullets.
 fun display_password_callback (prompt, bullets) {
@@ -473,12 +472,12 @@ fun display_password_callback (prompt, bullets) {
     if (!global.password_dialogue) password_dialogue_setup(prompt);
     password_dialogue_opacity (1);
     bullet_width = password_dialogue.bullet_image.GetWidth();
-    bullet_y = password_dialogue.entry.y +
+    bullet_y = password_dialogue.entry.y -
                password_dialogue.entry.image.GetHeight () / 2 -
                password_dialogue.bullet_image.GetHeight () / 2;
     margin = bullet_width;
     spaces = Math.Int( (password_dialogue.entry.image.GetWidth () - (margin * 2) ) / (2 * bullet_width / 3) );
-    #Debug ("spaces = " + spaces + ", bullets = " + bullets);
+    #DebugBottom ("spaces = " + spaces + ", bullets = " + bullets);
     bullets_area.width = margin + spaces * (2 * bullet_width / 3);
     bullets_area.x = Window.GetX () + Window.GetWidth () / 2 - bullets_area.width / 2;
     #DebugBottom ("pwd_entry x = " + password_dialogue.entry.x + ", bullets_area.x = " + bullets_area.x + ", bullets_area.width = " + bullets_area.width);
@@ -1011,11 +1010,6 @@ fun display_question_callback (prompt, contents) {
 #
 fun refresh_callback ()
 {
-    # Questo và fatto ad ogni refresh
-   # tux.sprite.SetX(tux.x);
-   # tux.sprite.SetY(tux.y);
-   # tux.sprite.SetZ(tux.z);
-   # tux.sprite.SetOpacity(1);
 
 }
 
@@ -1065,9 +1059,9 @@ fun crea_piruli_del_poli(n_piruli, perc_x, perc_y, raggio, def_z_index, show) {
     obj.start_angle = Math.Pi/2;
     obj.raggio = raggio;
     if (show) {
-    	obj.last_active = n_piruli;
+            obj.last_active = n_piruli;
     } else {
-    	obj.last_active = 0;
+            obj.last_active = 0;
     }
 
     for (i = 0; i < n_piruli; ++i) {
@@ -1077,22 +1071,22 @@ fun crea_piruli_del_poli(n_piruli, perc_x, perc_y, raggio, def_z_index, show) {
         sprite.SetX(obj.x - Math.Cos(ang)*raggio);
         sprite.SetY(obj.y - Math.Sin(ang)*raggio);
         sprite.SetZ(def_z_index);
-	if (show) {
-	    sprite.SetOpacity(1);
-	} else {
-	    sprite.SetOpacity(0);
-	}
+        if (show) {
+            sprite.SetOpacity(1);
+        } else {
+            sprite.SetOpacity(0);
+        }
         obj.sprites[i] = sprite;
     }
     return obj;
 }
 
 fun mostra_prox_pirulo(obj) {
-	obj.sprites[obj.last_active++].SetOpacity(1);
+        obj.sprites[obj.last_active++].SetOpacity(1);
 }
 
 fun nasc_prox_pirulo(obj) {
-	obj.sprites[obj.last_active--].SetOpacity(0);
+        obj.sprites[obj.last_active--].SetOpacity(0);
 }
 
 fun scale_sprite_image (ctr_sprite, perc_x, perc_y) {
@@ -1137,44 +1131,6 @@ fun set_sprite_obj_pos_rel_window_center(object, perc_x, perc_y) {
 
     return object;
 }
-# Salviamo le coordinate per ridisegnarle nel callback di aggiornamento
-#tux.x = tux.sprite.GetX();
-#tux.y = tux.sprite.GetY();
-#tux.z = 1;
-#
-#tux.rot.steps = 100;
-#tux.rot.delay = 0.05;
-#
-#tux.ogWdt = tux.image.GetWidth();
-#tux.ogHht = tux.image.GetHeight();
-#
-#tux.init_scale = 0.3;
-
-## Ruota il nostro tux
-#fun rotate_tux () {
-#    if (tux.rot.pos == NULL ) {
-#        tux.rot.pos = 0;
-#    }
-#    ++tux.rot.pos;
-#
-#    position =  tux.rot.pos*(6.28319 / tux.rot.steps); # rotate 2pi/steps
-#    tux.sprite.SetImage(tux.image.Rotate(position));
-#}
-#
-#fun sin_scale_tux(val) {
-#    min_size = 0.3;
-#    tux.new_img = tux.image.Scale(tux.ogWdt*Math.Sin((val + min_size)*3.14/2) ,
-#                              tux.ogHht*Math.Sin((val + min_size)*3.14/2));
-#
-#    DebugBottom(tux.ogWdt + " " + tux.ogHht + " " + tux.image + " " + tux.new_img);
-#    # Aggiorniamo anche l'immagine nel nostro oggetto
-#    tux.image = tux.new_img;
-#    # Ricentra l'immagine dopo averla scalata
-#    tux.x = Window.GetX () + Window.GetWidth () / 2 - tux.sprite.GetImage().GetWidth()/ 2;
-#    tux.y = Window.GetY () + Window.GetHeight () / 2 - tux.sprite.GetImage().GetHeight()/2;
-#    tux.sprite.SetImage(tux.new_img);
-#
-#}
 
 
 #----------------------------------------------------------------------------
@@ -1195,15 +1151,14 @@ set_sprite_obj_pos_rel_window_center(sprites["scritta"], 0.5, 0.85);
 max_piruli = 105;
 
 if (Plymouth.GetMode () == "boot") {
-	global.piruli = crea_piruli_del_poli(max_piruli, 0.495, 0.37, 300, 20, 0);
+        global.piruli = crea_piruli_del_poli(max_piruli, 0.495, 0.37, 300, 20, 0);
 } else if (Plymouth.GetMode () == "shutdown") {
-	global.piruli = crea_piruli_del_poli(max_piruli, 0.495, 0.37, 300, 20, 1);
+        global.piruli = crea_piruli_del_poli(max_piruli, 0.495, 0.37, 300, 20, 1);
 }
 
 
 
 Plymouth.SetQuitFunction(quit_callback);
-Plymouth.SetDisplayPasswordFunction (display_password_callback);
 Plymouth.SetMessageFunction (message_callback);
 Plymouth.SetDisplayQuestionFunction (display_question_callback);
 Plymouth.SetDisplayNormalFunction (display_normal_callback);
@@ -1211,4 +1166,4 @@ Plymouth.SetUpdateStatusFunction (update_status_callback);
 
 Plymouth.SetRefreshFunction (refresh_callback);
 Plymouth.SetBootProgressFunction (animate_progress_indicator);
-
+Plymouth.SetDisplayPasswordFunction (display_password_callback);

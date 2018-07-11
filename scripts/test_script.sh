@@ -5,7 +5,8 @@ sudo mkdir /usr/share/plymouth/themes/$THEME_NAME
 sudo cp -r ../{img,$THEME_NAME*} /usr/share/plymouth/themes/$THEME_NAME
 sudo rm /usr/share/plymouth/themes/$THEME_NAME/img/*.svg
 sudo plymouthd --debug > debug_plymouthd
-sudo plymouth --show-splash
+sudo plymouth show-splash
+sudo plymouth ask-for-password --prompt="Insert password" --dont-pause-progress
 
 sudo plymouth update --status="colmsg:1:1:1:1:hey"
 sudo plymouth update --status="colmsg:1:1:0:1:test2"
@@ -58,5 +59,4 @@ sudo plymouth update --status="colmsg:1:1:1:1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 sudo plymouth update --status="colmsg:1:1:1:1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 
 sleep 10
-
-sudo killall plymouthd
+sudo plymouth quit
