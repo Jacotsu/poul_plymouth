@@ -5,4 +5,4 @@ ModuleName=script
 
 [script]
 ImageDir=/usr/share/plymouth/themes/tema_plymouth_poul/img
-ScriptFile=/usr/share/plymouth/themes/tema_plymouth_poul/poul-plymouth.script
+ScriptFile=/usr/share/plymouth/themes/tema_plymouth_poul/tema_plymouth_poul.script
