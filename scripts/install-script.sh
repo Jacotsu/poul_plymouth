@@ -2,7 +2,7 @@
 THEME_NAME='tema_plymouth_poul'
 
 # File copy installation
-sudo mkdir /usr/share/plymouth/themes/$haTHEME_NAME
+sudo mkdir /usr/share/plymouth/themes/$THEME_NAME
 sudo cp -r ../{img,$THEME_NAME*} /usr/share/plymouth/themes/$THEME_NAME
 sudo rm /usr/share/plymouth/themes/$THEME_NAME/img/*.svg
 sudo ln -sf /usr/share/plymouth/themes/$THEME_NAME/$THEME_NAME.plymouth /etc/alternatives/default.plymouth
