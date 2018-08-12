@@ -10,7 +10,7 @@ decho(){
 cursor=$(journalctl --output-fields=PRIORITY,MESSAGE --no-pager -b -0\
     -o json | head -n 1 | grep -Po '(?<="__CURSOR"\ :\ ").*?[^\\](?=",)');
 
-while ! plymouth --ping; do
+while plymouth --ping; do
 
     journalctl --output-fields=PRIORITY,MESSAGE --no-pager -b -0 -c "$cursor" \
         -o json | while IFS= read -r line ;
