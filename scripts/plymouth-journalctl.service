@@ -7,3 +7,6 @@ Before=graphical.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/journalctl-logger.sh
+
+[Install]
+WantedBy=multi-user.target
