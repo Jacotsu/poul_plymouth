@@ -8,8 +8,8 @@ sudo plymouthd --debug > debug_plymouthd
 sudo plymouth show-splash
 #sudo plymouth ask-for-password --prompt="Insert password" --dont-pause-progress
 
-sudo plymouth update --status="colmsg:0:0:0:0:hey"
-sudo plymouth update --status="colmsg:0:0:0:0:test2"
+sudo plymouth update --status="colmsg:0:1:0:0:hey"
+sudo plymouth update --status="colmsg:0:1:0:0:test2"
 sudo plymouth update --status="colmsg:0:0:0.7:0:test3"
 sudo plymouth update --status="colmsg:0:0:0.3:0:test4"
 sudo plymouth update --status="colmsg:0:0:0:0.4:test5"

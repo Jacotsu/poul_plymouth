@@ -32,7 +32,7 @@ while plymouth --ping; do
                 plymouth update --status="$msg"
                 ;;
             *[5-7]*)
-                msg="colmsg:0:0.156:1:0:$message"
+                msg="colmsg:0:0.32:0.48:0.69:$message"
                 plymouth update --status="$msg"
                 ;;
         esac
