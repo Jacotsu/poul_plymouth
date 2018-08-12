@@ -1,0 +1,9 @@
+[Unit]
+Description=Plymouth journalctl logging service
+Requires=network.target plymouth-start.service
+After=systemd-journald.service plymouth-start.service
+Before=graphical.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/journalctl-logger.sh
