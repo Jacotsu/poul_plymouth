@@ -9,6 +9,7 @@ Su distro diverse come arch ricordatevi di modificare
 modificare `/etc/mkinitcpi.conf` e aggiungere uno dei seguenti hooks:
 - `plymouth`: Se non usate la cifratura luks da montare all'avvio
 - `plymouth-encrypt`: Se usate la cifratura luks da montare all'avvio
+
 Rigenerare l'initram file con `sudo mkinitcpio -P`
 
 Se volete avere un console log semi-funzionante a schermo dovete usare
