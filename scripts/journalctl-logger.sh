@@ -24,15 +24,15 @@ while plymouth --ping; do
 
         case "$priority" in
             *[0-3]*)
-                msg="colmsg:1:0.976:0.043:0.043:$message"
+                msg="colmsg:0:0.976:0.043:0.043:$message"
                 plymouth update --status="$msg"
                 ;;
             *4*)
-                msg="colmsg:1:1:0.792:0:$message"
+                msg="colmsg:0:1:0.792:0:$message"
                 plymouth update --status="$msg"
                 ;;
             *[5-7]*)
-                msg="colmsg:1:0.156:1:0:$message"
+                msg="colmsg:0:0.156:1:0:$message"
                 plymouth update --status="$msg"
                 ;;
         esac

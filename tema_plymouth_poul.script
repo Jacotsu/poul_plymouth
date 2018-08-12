@@ -49,6 +49,114 @@ debugsprite_medium = Sprite();
 # Are we currently prompting for a password?
 prompt_active = 0;
 
+#-----------------------------------------Boot log window -----------------------
+fun console_window() {
+	object.NUM_SCROLL_LINES = 42;
+	object.LINE_WIDTH = 52;
+	object.x = 500;
+	object.y = 500;
+	object.z = 0;
+	object.text.x = 0;
+	object.text.y = 0;
+	object.text.z = 1;
+	object.text.height = 20;
+
+	#object.wallpaper.image = Image("message_box.png");
+	#object.wallpaper.sprite = Sprite(object.wallpaper.image);
+	#object.wallpaper.sprite.SetX(object.x);
+	#object.wallpaper.sprite.SetY(object.y);
+	#object.wallpaper.sprite.SetZ(object.z);
+
+	for (i=0; i < object.NUM_SCROLL_LINES; i++) {
+		object.lines[i]= Image.Text("", 0, 0, 0);
+		object.message_sprite[i] = Sprite();
+		object.message_sprite[i].SetPosition(object.x + object.text.x, (i * object.text.height) + object.y + object.text.y, object.z + object.text.z);
+	}
+	return object;
+}
+
+fun console_window_setx(window, x) {
+	window.x = x;
+}
+
+fun console_window_sety(window, y) {
+	window.y = y;
+}
+
+fun console_window_setz(window, z) {
+	window.z = z;
+}
+
+fun console_text_setx(window, x) {
+	window.text.x = x;
+}
+
+fun console_text_sety(window, y) {
+	window.text.y = y;
+}
+
+fun console_text_setz(window, z) {
+	window.text.z = z;
+}
+
+fun console_window_setwallpaper(window, path) {
+	window.wallpaper.image = Image(path);
+	window.wallpaper.sprite = Sprite(window.wallpaper.image);
+}
+
+fun update_console_window(window) {
+	window.wallpaper.sprite.SetX(window.x);
+	window.wallpaper.sprite.SetY(window.y);
+	window.wallpaper.sprite.SetZ(window.z);
+
+	for (i=0; i < window.NUM_SCROLL_LINES; i++) {
+		window.message_sprite[i].SetPosition(window.x + window.text.x, (i * window.text.height) + window.y + window.text.y, window.z + window.text.z);
+	}
+}
+
+fun window_scroll_message(window, text, color) {
+
+   // Truncate the message if too long
+   if (StringLength(text) > window.LINE_WIDTH) {
+     text = text.SubString(0, window.LINE_WIDTH - 3);
+     text += "...";
+   }
+
+   // Shift message one up
+   for (i = window.NUM_SCROLL_LINES - 1; i > 0; i--) {
+     window.lines[i] = window.lines[i-1];
+   }
+
+   // Create the image for the latest message
+   window.lines[0] = Image.Text(text, color.r, color.g, color.b);
+
+   // Re-positioning the text images
+   for (i = 0; i < window.NUM_SCROLL_LINES; i++) {
+     window.message_sprite[i].SetImage(window.lines[i]);
+   }
+   update_console_window(window);
+}
+
+
+#-----------------------------------------------------------------------------
+
+
+# logging consoles---
+boot_log = 0;
+
+logs[boot_log] = console_window();
+
+console_window_setx(logs[boot_log],1320);
+console_window_sety(logs[boot_log],50);
+console_window_setz(logs[boot_log],1000);
+
+
+console_text_setx(logs[boot_log],25);
+console_text_sety(logs[boot_log],95);
+console_text_setz(logs[boot_log],1001);
+
+update_console_window(logs[boot_log]);
+
 
 # General purpose function to create text
 fun WriteText (text, colour) {
@@ -919,12 +1027,12 @@ fun update_status_callback (status) {
 
     # colmsg:windowID:r:g:b:msg
     if (update_strings[0] == "colmsg") {
-    id = StringToInteger(update_strings[1]);
-    color.r = StringToFloat(update_strings[2]);
-    color.g = StringToFloat(update_strings[3]);
-    color.b = StringToFloat(update_strings[4]);
-    msg = update_strings[5];
-
+        id = StringToInteger(update_strings[1]);
+        color.r = StringToFloat(update_strings[2]);
+        color.g = StringToFloat(update_strings[3]);
+        color.b = StringToFloat(update_strings[4]);
+        msg = update_strings[5];
+        window_scroll_message(logs[id], msg, color);
     }
 }
 
@@ -1049,6 +1157,7 @@ fun quit_callback ()
 }
 
 
+
 #-------------------------------- Il nostro codice ---------------------------
 
 fun crea_piruli_del_poli(n_piruli, perc_x, perc_y, raggio, def_z_index, show) {
@@ -1147,6 +1256,8 @@ fun set_sprite_obj_pos_rel_window_center(object, perc_x, perc_y) {
 
 #----------------------------------------------------------------------------
 
+
+
 # Carica l'immagine png, crea una sprite e la centra a schermo
 sprites["pinguini"] = centered_sprite("pinguini.png");
 #sprites["outer_ring"] = centered_sprite("outer_ring.png");
@@ -1165,6 +1276,11 @@ raggio_piruli = Math.Sqrt(sprites["pinguini"].height *
                           sprites["pinguini"].height +
                           sprites["pinguini"].width *
                           sprites["pinguini"].width)*0.45;
+color.r = 1;
+color.g = 1;
+color.b = 1;
+
+window_scroll_message(logs[boot_log], "kek", color);
 
 if (Plymouth.GetMode () == "boot") {
         global.piruli = crea_piruli_del_poli(max_piruli, 0.495, 0.37,
