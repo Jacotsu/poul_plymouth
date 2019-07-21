@@ -2,6 +2,7 @@
 
 ## Ubuntu disco dingo
 ```
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3E54FA70
 sudo add-apt-repository ppa:jacotsu/plymouth-theme-poul
 sudo apt install plymouth-theme-poul
 ```

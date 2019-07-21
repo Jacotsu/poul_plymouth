@@ -1,4 +1,16 @@
-plymouth-theme-poul (1.0-1) UNRELEASED; urgency=low
+plymouth-theme-poul (1.0-3) disco; urgency=low
+
+  * Committed decentered ring fix
+
+ --  Di Campli Raffaele <dcdrj.pub@gmail.com>  Sun, 21 Jul 2019 16:31:26 +0200
+
+plymouth-theme-poul (1.0-2) disco; urgency=low
+
+  * Fixed uncentered shutdown ring
+
+ --  Di Campli Raffaele <dcdrj.pub@gmail.com>  Sun, 21 Jul 2019 16:18:34 +0200
+
+plymouth-theme-poul (1.0-1) disco; urgency=low
 
   * Initial release. (Closes: #XXXXXX)
  -- Di Campli Raffaele <dcdrj.pub@gmail.com>  Sun, 21 Jul 2019 17:25:32 +0000
