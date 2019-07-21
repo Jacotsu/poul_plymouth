@@ -1191,7 +1191,7 @@ if (Plymouth.GetMode () == "boot") {
         global.piruli = crea_piruli_del_poli(max_piruli, 0.5, 0.4,
                                              raggio_piruli, 20, 0);
 } else if (Plymouth.GetMode () == "shutdown") {
-        global.piruli = crea_piruli_del_poli(max_piruli, 0.4, 0.4,
+        global.piruli = crea_piruli_del_poli(max_piruli, 0.5, 0.4,
                                              raggio_piruli, 20, 1);
 }
 
