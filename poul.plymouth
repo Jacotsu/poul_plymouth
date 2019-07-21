@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Custom poul theme
+Description=Custom poul theme made by jacotsu
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/poul/img
+ScriptFile=/usr/share/plymouth/themes/poul/poul.script
