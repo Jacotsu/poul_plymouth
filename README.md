@@ -1,4 +1,11 @@
 # Installazione
+
+## Ubuntu disco dingo
+```
+sudo add-apt-repository ppa:jacotsu/plymouth-theme-poul
+sudo apt install plymouth-theme-poul
+```
+## Others
 ```
 cd scripts
 sudo ./install-script.sh
