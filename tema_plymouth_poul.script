@@ -1051,8 +1051,21 @@ fun quit_callback ()
 
 #-------------------------------- Il nostro codice ---------------------------
 
+fun get_sprite_center(sprite) {
+    obj.x = sprite.GetX() + sprite.GetImage().GetWidth()/2;
+    obj.y = sprite.GetY() + sprite.GetImage().GetHeight()/2;
+    return obj;
+}
+
+fun coords_from_center_to_top_left(sprite, coords) {
+    obj.x = coords.x - sprite.GetImage().GetWidth()/2;
+    obj.y = coords.y - sprite.GetImage().GetHeight()/2;
+    return obj;
+}
+
 fun crea_piruli_del_poli(n_piruli, perc_x, perc_y, raggio, def_z_index, show) {
-    obj.image = Image("pirulo.png").Scale(15,70);
+    #obj.image = Image("pirulo.png").Scale(15,70);
+    obj.image = Image("pirulo.png");
     obj.x = Window.GetX () + Window.GetWidth()*perc_x;
     obj.y = Window.GetY () + Window.GetHeight()*perc_y;
     obj.step = 2*Math.Pi/n_piruli;
@@ -1065,11 +1078,14 @@ fun crea_piruli_del_poli(n_piruli, perc_x, perc_y, raggio, def_z_index, show) {
     }
 
     for (i = 0; i < n_piruli; ++i) {
-        ang = obj.start_angle + obj.step * i;
+        ang = obj.start_angle - obj.step * i;
         pirulo_rot = obj.image.Rotate(obj.step*i);
         sprite = Sprite(pirulo_rot);
-        sprite.SetX(obj.x - Math.Cos(ang)*raggio);
-        sprite.SetY(obj.y - Math.Sin(ang)*raggio);
+        sprite_ctr.x = obj.x + Math.Cos(ang)*raggio;
+        sprite_ctr.y = obj.y + Math.Sin(ang)*raggio;
+        sprite_top_left = coords_from_center_to_top_left(sprite, sprite_ctr);
+        sprite.SetX(sprite_top_left.x);
+        sprite.SetY(sprite_top_left.y);
         sprite.SetZ(def_z_index);
         if (show) {
             sprite.SetOpacity(1);
@@ -1149,14 +1165,12 @@ fun set_sprite_obj_pos_rel_window_center(object, perc_x, perc_y) {
 
 # Carica l'immagine png, crea una sprite e la centra a schermo
 sprites["pinguini"] = centered_sprite("pinguini.png");
-#sprites["outer_ring"] = centered_sprite("outer_ring.png");
 sprites["scritta"] = centered_sprite("scritta.png");
 
 
-#scale_sprite_image(sprites["pinguini"], 0.4, 0.4);
 scale_sprite_image_rel_window_height(sprites["pinguini"], 0.39, 0.39);
 set_sprite_obj_pos_rel_window_center(sprites["pinguini"], 0.5, 0.4);
-#scale_sprite_image(sprites["scritta"], 0.2, 0.2);
+
 scale_sprite_image_rel_window_height(sprites["scritta"], 0.15, 0.15);
 set_sprite_obj_pos_rel_window_center(sprites["scritta"], 0.5, 0.85);
 
@@ -1167,10 +1181,15 @@ raggio_piruli = Math.Sqrt(sprites["pinguini"].height *
                           sprites["pinguini"].width)*0.45;
 
 if (Plymouth.GetMode () == "boot") {
-        global.piruli = crea_piruli_del_poli(max_piruli, 0.495, 0.37,
+        #global.piruli = crea_piruli_del_poli(max_piruli, 0.495, 0.37,
+        #                                     raggio_piruli, 20, 0);
+        global.piruli = crea_piruli_del_poli(max_piruli, 0.5, 0.4,
                                              raggio_piruli, 20, 0);
 } else if (Plymouth.GetMode () == "shutdown") {
-        global.piruli = crea_piruli_del_poli(max_piruli, 0.495, 0.37, raggio_piruli, 20, 1);
+        #global.piruli = crea_piruli_del_poli(max_piruli, 0.495, 0.37,
+        #                                     raggio_piruli, 20, 1);
+        global.piruli = crea_piruli_del_poli(max_piruli, 0.4, 0.4,
+                                             raggio_piruli, 20, 1);
 }
 
 
