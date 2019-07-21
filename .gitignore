@@ -1,0 +1,8 @@
+*/debian/plymouth-theme-poul*
+*/debian/plymouth-theme-poul/
+*.buildinfo
+*.build
+*.changes
+*.tar.gz
+*.dsc
+*.deb

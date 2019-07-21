@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-THEME_NAME='tema_plymouth_poul'
+THEME_NAME='poul'
 
 # File copy installation
 sudo mkdir /usr/share/plymouth/themes/$THEME_NAME
@@ -10,4 +10,4 @@ sudo ln -sf /usr/share/plymouth/themes/$THEME_NAME/$THEME_NAME.grub /etc/alterna
 
 
 # if we don't update the initramfs our custom theme won't show at boot
-sudo update-initramfs -c -k all
+sudo update-initramfs -u

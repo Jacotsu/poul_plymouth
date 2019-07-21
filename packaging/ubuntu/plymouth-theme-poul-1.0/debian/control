@@ -1,0 +1,12 @@
+Source: plymouth-theme-poul
+Maintainer: Di Campli Raffaele <dcdrj.pub@gmail.com>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 9)
+
+Package: plymouth-theme-poul
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, plymouth (>= 0.0.4)
+Description: Installs POuL's plymouth theme
+ Install the plymouth theme of Politecnico Open Unix Labs

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-THEME_NAME='tema_plymouth_poul'
+THEME_NAME='poul'
 
 sudo mkdir /usr/share/plymouth/themes/$THEME_NAME
 sudo cp -r ../{img,$THEME_NAME*} /usr/share/plymouth/themes/$THEME_NAME
