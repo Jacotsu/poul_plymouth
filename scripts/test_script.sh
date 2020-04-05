@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 THEME_NAME='poul'
 
-sudo mkdir /usr/share/plymouth/themes/$THEME_NAME
+sudo mkdir -p /usr/share/plymouth/themes/$THEME_NAME
 sudo cp -r ../{img,$THEME_NAME*} /usr/share/plymouth/themes/$THEME_NAME
 sudo rm /usr/share/plymouth/themes/$THEME_NAME/img/*.svg
+sudo chmod -R u+r+w+X,g+r+X,o+r+X poul/
 sudo plymouthd --debug > debug_plymouthd
 sudo plymouth show-splash
 sudo plymouth ask-for-password --prompt="Insert password" --dont-pause-progress
