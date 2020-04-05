@@ -5,7 +5,7 @@ sudo mkdir -p /usr/share/plymouth/themes/$THEME_NAME
 sudo cp -r ../{img,$THEME_NAME*} /usr/share/plymouth/themes/$THEME_NAME
 sudo rm /usr/share/plymouth/themes/$THEME_NAME/img/*.svg
 sudo chmod -R u+r+w+X,g+r+X,o+r+X /usr/share/plymouth/themes/$THEME_NAME/
-sudo plymouthd --debug > debug_plymouthd
+sudo plymouthd --debug --kernel-command-line='quiet splash' > debug_plymouthd
 sudo plymouth show-splash
 sudo plymouth ask-for-password --prompt="Insert password" --dont-pause-progress
 
